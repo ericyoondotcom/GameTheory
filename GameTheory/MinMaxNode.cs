@@ -1,10 +1,11 @@
 ﻿using System;
 namespace GameTheory
 {
-    public interface MinMaxNode
+    public abstract class MinMaxNode
     {
-        int Value { get; }
+        public int Value { get; set; }
+        public virtual MinMaxNode[] Children { get; }
 
-        MinMaxNode[] children { get; set; }
+
     }
 }
