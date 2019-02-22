@@ -20,8 +20,8 @@ namespace GameTheory
 
         public enum WinState
         {
-            X = 9999,
-            O = -9999,
+            X = int.MaxValue,
+            O = int.MinValue,
             Tie = 0,
             NoWin = -1
         }

@@ -4,7 +4,7 @@ namespace GameTheory
     public static class MinMax
     {
     
-        public static (int value, MinMaxNode best) GetValue(MinMaxNode current, bool isMax)
+        public static (int value, MinMaxNode best) GetValue(MinMaxNode current, bool isMax, int alpha = int.MinValue, int beta = int.MaxValue)
         {
             if (current.Children == null || current.Children.Length == 0)
             {
@@ -20,8 +20,17 @@ namespace GameTheory
                 //if ((isMax && (val > bestValue)) || (!isMax && (val < bestValue)))
                 if((isMax && ((val > bestValue) || (val == bestValue && randy.Next(2) == 1))) || (!isMax && ((val < bestValue) || (val == bestValue && randy.Next(2) == 1))))
                 {
+                    if (isMax)
+                        alpha = Math.Max(val, alpha);
+                    else
+                        beta = Math.Min(val, beta);
+
                     best = c;
                     bestValue = val;
+                    if(alpha >= beta)
+                    {
+                        break;
+                    }
                 }
             }
 
