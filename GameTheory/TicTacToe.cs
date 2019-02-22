@@ -20,10 +20,10 @@ namespace GameTheory
 
         public enum WinState
         {
-            X = 1,
-            O = -1,
+            X = 9999,
+            O = -9999,
             Tie = 0,
-            NoWin = 0
+            NoWin = -1
         }
 
         public TicTacToeNode currentNode;
@@ -35,7 +35,8 @@ namespace GameTheory
             }
             set
             {
-                currentNode = new TicTacToeNode(value, CellState.O).GenerateNodes(); 
+                currentNode = new TicTacToeNode(value, CellState.O);
+                currentNode.GenerateNodes();
             }
         }
 
@@ -47,6 +48,8 @@ namespace GameTheory
 
         public void HumanMove(int row, int col)
         {
+            Console.SetCursorPosition(0, 0);
+            Console.Clear();
             grid[row, col] = CellState.O;
             Console.WriteLine(this);
             Console.WriteLine(CheckWinner(grid));
@@ -54,7 +57,10 @@ namespace GameTheory
 
         public void ComputerMove()
         {
-            currentNode = (TicTacToeNode)MinMax.GetValue(new TicTacToeNode(grid, CellState.O).GenerateNodes(), true).best;
+            Console.SetCursorPosition(0, 0);
+            Console.Clear();
+            TicTacToeNode n = new TicTacToeNode(grid, CellState.O);
+            currentNode = (TicTacToeNode)MinMax.GetValue(n, true).best;
             Console.WriteLine(this);
             Console.WriteLine(CheckWinner(grid));
         }
@@ -74,14 +80,23 @@ namespace GameTheory
                 {
                     return WinState.O;
                 }
-                if (grid[i, 0] == CellState.Blank || grid[i, 1] == CellState.Blank || grid[i, 2] == CellState.Blank) tie = false;
+
+                if (grid[i, 0] == CellState.Blank || grid[i, 1] == CellState.Blank || grid[i, 2] == CellState.Blank)
+                {
+                    tie = false;
+                }
             }
             int dia1 = (int)grid[0, 0] + (int)grid[1, 1] + (int)grid[2, 2];
             int dia2 = (int)grid[2, 0] + (int)grid[1, 1] + (int)grid[0, 2];
-            if (dia1 == 3 || dia2 == 3) return WinState.X;
-            if (dia1 == -3 || dia2 == -3) return WinState.O;
+            if (dia1 == 3 || dia2 == 3)
+                return WinState.X;
+            if (dia1 == -3 || dia2 == -3)
+                return WinState.O;
 
-            if (tie) return WinState.Tie;
+            if (tie)
+            {
+                return WinState.Tie;
+            }
             return WinState.NoWin;
         }
 

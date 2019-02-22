@@ -17,8 +17,8 @@ namespace GameTheory
             foreach(MinMaxNode c in current.Children)
             {
                 int val = GetValue(c, !isMax).value;
-                
-                if((isMax && ((val > bestValue) || (val == bestValue && randy.Next(2) == 1))) || (!isMax && ((val > bestValue) || (val == bestValue && randy.Next(2) == 1))))
+                //if ((isMax && (val > bestValue)) || (!isMax && (val < bestValue)))
+                if((isMax && ((val > bestValue) || (val == bestValue && randy.Next(2) == 1))) || (!isMax && ((val < bestValue) || (val == bestValue && randy.Next(2) == 1))))
                 {
                     best = c;
                     bestValue = val;

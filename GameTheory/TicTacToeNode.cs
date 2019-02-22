@@ -18,6 +18,7 @@ namespace GameTheory
                 if(children == null)
                 {
                     GenerateNodes();
+                    //GETTING AN EXCEPTION RIGHT ABOUT HERE? STOP DOING THE GENERATE NODES CHAINING THING
                 }
 
                 return children.ToArray();
@@ -32,14 +33,15 @@ namespace GameTheory
 
         
 
-        public TicTacToeNode GenerateNodes()
+        public List<TicTacToeNode> GenerateNodes()
         {
 
+           
+            children = new List<TicTacToeNode>();
             if (TicTacToe.CheckWinner(grid) != TicTacToe.WinState.NoWin)
             {
-                return this;
+                return children;
             }
-            children = new List<TicTacToeNode>();
             for (int row = 0; row < grid.GetLength(0); row++)
             {
                 for (int col = 0; col < grid.GetLength(1); col++)
@@ -58,7 +60,7 @@ namespace GameTheory
                 }
             }
 
-            return this; //Do this for some cheep chaining
+            return children;
         }
 
         
