@@ -50,6 +50,12 @@ namespace GameTheory
         {
             Console.SetCursorPosition(0, 0);
             Console.Clear();
+            if(grid[row, col] != CellState.Blank)
+            {
+                Console.WriteLine("Nice try, cheater. That space is already filled!");
+                Console.ReadKey();
+                return;
+            }
             grid[row, col] = CellState.O;
             Console.WriteLine(this);
             Console.WriteLine(CheckWinner(grid));
