@@ -20,8 +20,8 @@ namespace GameTheory
 
         public enum WinState
         {
-            X = int.MaxValue,
-            O = int.MinValue,
+            X = 9999,
+            O = -9999,
             Tie = 0,
             NoWin = -1
         }
@@ -66,7 +66,7 @@ namespace GameTheory
             Console.SetCursorPosition(0, 0);
             Console.Clear();
             TicTacToeNode n = new TicTacToeNode(grid, CellState.O);
-            currentNode = (TicTacToeNode)MinMax.GetValue(n, true).best;
+            currentNode = (TicTacToeNode)GameLogic.MinMax(n, true).best;
             Console.WriteLine(this);
             Console.WriteLine(CheckWinner(grid));
         }

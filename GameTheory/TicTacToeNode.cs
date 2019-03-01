@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameTheory
 {
-    public class TicTacToeNode : MinMaxNode
+    public class TicTacToeNode : GameNode
     {
     
 
@@ -11,7 +11,7 @@ namespace GameTheory
         public TicTacToe.CellState[,] grid;
         List<TicTacToeNode> children;
 
-        public override MinMaxNode[] Children
+        public override GameNode[] Children
         {
             get
             {
