@@ -42,10 +42,9 @@ namespace GameTheory
 
         public static MonteCarloNode MonteCarlo(MonteCarloNode root, bool isMax, int simulations)
         {
-            var visited = new HashSet<MonteCarloNode>();
             for(int i = 0; i < simulations; i++)
             {
-                MCSelection(root, isMax, visited);
+                __MonteCarlo(root, isMax);
             }
 
             int best = -1;
@@ -65,31 +64,57 @@ namespace GameTheory
         /// Recursive helper function to MonteCarlo()
         /// </summary>
         /// <returns>True if the simulation resulted in a WIN.</returns>
-        static bool MCSelection(MonteCarloNode current, bool isMax, HashSet<MonteCarloNode> visited)
+        static float __MonteCarlo(MonteCarloNode current, bool isMax)
         {
 
-            if (!IsFullyEpanded(current, visited))
+            if (!current.FullyEpanded)
             {
-                //Select random child that isn't visited
-                //Set it to visited
-
-                //Todo: Simulate that node.
-
-                //Cut off fake simulated children
-
-                //return loss/win/tie
+                MonteCarloNode child = MonteCarloSelect(current);
+                return Simulate(child);
             }
 
-            //Todo: Select which node to simulate, using the UCT fn.
+            MonteCarloNode best = current.Children[0];
+            for(int i = 1; i < current.Children.Length; i++)
+            {
+                MonteCarloNode n = current.Children[i];
+                if (UCT(n, current.gamesSimulated) > UCT(best, current.gamesSimulated))
+                {
+                    best = n;
+                }
+
+
+            }
+
 
             //Todo: Unwind recursion and set win/games data. 
 
 
         }
 
-        static bool IsFullyEpanded(MonteCarloNode node, HashSet<MonteCarloNode> visited)
+        static MonteCarloNode MonteCarloSelect(MonteCarloNode node)
         {
-            return node.Children.All(n => visited.Contains(node));
+            Random randy = new Random();
+            List<MonteCarloNode> unvisitedChildren = node.Children.Where(n => !n.Visited).ToList();
+            MonteCarloNode randomChild = unvisitedChildren[randy.Next(unvisitedChildren.Count)];
+            randomChild.Visited = true;
+            return randomChild;
+        }
+
+        static double UCT(MonteCarloNode child, double parentSims, double rate = 1.4142135624)
+        {
+            return (child.wins / child.gamesSimulated) + (rate * Math.Sqrt(Math.Log(parentSims) / child.gamesSimulated));
+        }
+
+        static float Simulate(MonteCarloNode initial)
+        {
+            Random randy = new Random();
+            MonteCarloNode simulated = initial.Children[randy.Next(initial.Children.Length)];
+            while (!simulated.IsTerminal)
+            {
+                simulated = simulated.Children[randy.Next(simulated.Children.Length)];
+            }
+            initial.Children = new MonteCarloNode[0];
+            return simulated.Value;
         }
 
     }
