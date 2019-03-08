@@ -9,52 +9,28 @@ namespace GameTheory
 
             while (true)
             {
-                TicTacToe ttt = new TicTacToe();
+                ConnectFour game = new ConnectFour();
                 Console.Clear();
                 Console.WriteLine("Do you want to go first? (Y/n)");
                 if (Console.ReadKey().Key == ConsoleKey.N)
                 {
-                    ttt.ComputerMove();
+                    game.ComputerMove();
                 }
-                Console.Write(ttt);
+                Console.Write(game);
                 while (true)
                 {
                     bool exit = false;
                     switch (Console.ReadKey().Key)
                     {
-                        case ConsoleKey.Q:
-                            ttt.HumanMove(0, 0);
-                            break;
-                        case ConsoleKey.W:
-                            ttt.HumanMove(0, 1);
-                            break;
-                        case ConsoleKey.E:
-                            ttt.HumanMove(0, 2);
-                            break;
-                        case ConsoleKey.A:
-                            ttt.HumanMove(1, 0);
-                            break;
-                        case ConsoleKey.S:
-                            ttt.HumanMove(1, 1);
-                            break;
-                        case ConsoleKey.D:
-                            ttt.HumanMove(1, 2);
-                            break;
-                        case ConsoleKey.Z:
-                            ttt.HumanMove(2, 0);
-                            break;
-                        case ConsoleKey.X:
-                            ttt.HumanMove(2, 1);
-                            break;
-                        case ConsoleKey.C:
-                            ttt.HumanMove(2, 2);
+                        case ConsoleKey.D1:
+                            game.HumanMove(0);
                             break;
                         case ConsoleKey.Enter:
                             exit = true;
                             break;
                     }
                     if (exit) break;
-                    ttt.ComputerMove();
+                    game.ComputerMove();
 
                 }
             }

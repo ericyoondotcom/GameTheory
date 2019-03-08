@@ -39,6 +39,8 @@
     <Compile Include="TicTacToe.cs" />
     <Compile Include="TicTacToeNode.cs" />
     <Compile Include="MonteCarloNode.cs" />
+    <Compile Include="ConnectFourNode.cs" />
+    <Compile Include="ConnectFour.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

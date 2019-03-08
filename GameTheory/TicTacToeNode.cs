@@ -18,7 +18,6 @@ namespace GameTheory
                 if(children == null)
                 {
                     GenerateNodes();
-                    //GETTING AN EXCEPTION RIGHT ABOUT HERE? STOP DOING THE GENERATE NODES CHAINING THING
                 }
 
                 return children.ToArray();

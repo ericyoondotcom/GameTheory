@@ -68,7 +68,7 @@ namespace GameTheory
             TicTacToeNode n = new TicTacToeNode(grid, CellState.O);
             currentNode = (TicTacToeNode)GameLogic.MinMax(n, true).best;
             Console.WriteLine(this);
-            Console.WriteLine(CheckWinner(grid));
+            Console.WriteLine(CheckWinner(grid));                     
         }
 
         public static WinState CheckWinner(CellState[,] grid)

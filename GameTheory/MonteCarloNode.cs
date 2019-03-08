@@ -5,7 +5,7 @@ namespace GameTheory
     {
         public float wins { get; set; }
         public float gamesSimulated { get; set; }
-        public MonteCarloNode[] Children { get; set; }
+        public virtual MonteCarloNode[] Children { get; set; }
 
 
         public bool Visited { get; set; }

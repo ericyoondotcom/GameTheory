@@ -47,7 +47,7 @@ namespace GameTheory
                 __MonteCarlo(root, isMax);
             }
 
-            int best = -1;
+            float best = -1;
             MonteCarloNode bestNode = null;
             foreach(MonteCarloNode n in root.Children)
             {
@@ -81,13 +81,21 @@ namespace GameTheory
                 {
                     best = n;
                 }
-
-
             }
 
+            float res = __MonteCarlo(best, !isMax);
 
-            //Todo: Unwind recursion and set win/games data. 
+            if((isMax && res == 1) || (!isMax && res == -1))
+            {
+                current.wins++;
+            }
+            else
+            {
+                current.wins += .5f;
+            }
 
+            current.gamesSimulated++;
+            return res;
 
         }
 
@@ -107,6 +115,7 @@ namespace GameTheory
 
         static float Simulate(MonteCarloNode initial)
         {
+            if (initial.IsTerminal) return initial.Value;
             Random randy = new Random();
             MonteCarloNode simulated = initial.Children[randy.Next(initial.Children.Length)];
             while (!simulated.IsTerminal)
