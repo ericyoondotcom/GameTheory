@@ -32,18 +32,70 @@ namespace GameTheory
         public override int Value {
             get
             {
-                throw new NotImplementedException();
-                //TODO: Implement a win check
+                for(int i = 0; i < grid.GetLength(0); i++)
+                {
+                    for(int j = 0; j < grid.GetLength(1); j++)
+                    {
+                        if (
+                            i < grid.GetLength(0) - 4 &&
+                            grid[i, j] == ConnectFour.CellState.Mustard &&
+                            grid[i + 1, j] == ConnectFour.CellState.Mustard &&
+                            grid[i + 2, j] == ConnectFour.CellState.Mustard &&
+                            grid[i + 3, j] == ConnectFour.CellState.Mustard
+                        )
+                        {
+                            return 1;
+                        }
+
+                        if (
+                            i < grid.GetLength(0) - 4 &&
+                            grid[i, j] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 1, j] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 2, j] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 3, j] == ConnectFour.CellState.Ketchup
+                        )
+                        {
+                            return -1;
+                        }
+
+                        if (
+                            j < grid.GetLength(1) - 4 &&
+                            grid[i, j] == ConnectFour.CellState.Mustard &&
+                            grid[i, j + 1] == ConnectFour.CellState.Mustard &&
+                            grid[i, j + 2] == ConnectFour.CellState.Mustard &&
+                            grid[i, j + 3] == ConnectFour.CellState.Mustard
+                        )
+                        {
+                            return 1;
+                        }
+
+                        if (
+                            j < grid.GetLength(1) - 4 &&
+                            grid[i, j] == ConnectFour.CellState.Ketchup &&
+                            grid[i, j + 1] == ConnectFour.CellState.Ketchup &&
+                            grid[i, j + 2] == ConnectFour.CellState.Ketchup &&
+                            grid[i, j + 3] == ConnectFour.CellState.Ketchup
+                        )
+                        {
+                            return -1;
+                        }
+
+                        // TODO: Diagonal checks
+
+                    }
+                }
+                return 0;
+
             }
         }
 
-        List<ConnectFourNode> GenerateChildren()
+        public List<ConnectFourNode> GenerateChildren()
         {
             List<ConnectFourNode> newChildren = new List<ConnectFourNode>();
             for(int i = 0; i < grid.GetLength(1); i++)
             {
-                var newGrid = grid;
-                for(int j = grid.GetLength(0) - 1; j >= 0; j--)
+                ConnectFour.CellState[,] newGrid = (ConnectFour.CellState[,])grid.Clone();
+                for(int j = 0; j < grid.GetLength(0); j++)
                 {
                     if(grid[j, i] == ConnectFour.CellState.Empty)
                     {

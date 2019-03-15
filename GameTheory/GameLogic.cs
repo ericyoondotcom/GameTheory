@@ -67,11 +67,27 @@ namespace GameTheory
         static float __MonteCarlo(MonteCarloNode current, bool isMax)
         {
 
+            if (current.IsTerminal)
+            {
+                if ((isMax && current.Value == 1) || (!isMax && current.Value == -1))
+                {
+                    current.wins++;
+                }
+                else
+                {
+                    current.wins += .5f;
+                }
+
+                current.gamesSimulated++;
+                return current.Value;
+            }
             if (!current.FullyEpanded)
             {
                 MonteCarloNode child = MonteCarloSelect(current);
                 return Simulate(child);
             }
+
+
 
             MonteCarloNode best = current.Children[0];
             for(int i = 1; i < current.Children.Length; i++)
@@ -98,6 +114,7 @@ namespace GameTheory
             return res;
 
         }
+
 
         static MonteCarloNode MonteCarloSelect(MonteCarloNode node)
         {

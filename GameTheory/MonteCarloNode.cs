@@ -8,7 +8,7 @@ namespace GameTheory
         public virtual MonteCarloNode[] Children { get; set; }
 
 
-        public bool Visited { get; set; }
+        public bool Visited { get; set; } = false;
 
         public float WinRate
         {

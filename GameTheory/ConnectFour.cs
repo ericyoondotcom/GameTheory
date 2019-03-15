@@ -1,6 +1,15 @@
 ﻿using System;
 namespace GameTheory
 {
+
+    /*
+       
+     * Ketchup = X = -1
+     * Mustard = O = 1
+        
+    */
+
+
     public class ConnectFour
     {
 
@@ -30,7 +39,13 @@ namespace GameTheory
         public ConnectFour()
         {
             var newGrid = new CellState[7, 6];
-            //TODO: Loop through the new array and set it to blank
+            for(int i = 0; i < newGrid.GetLength(0); i++)
+            {
+                for(int j = 0; j < newGrid.GetLength(1); j++)
+                {
+                    newGrid[i, j] = CellState.Empty;
+                }
+            }
             this.currentNode = new ConnectFourNode(newGrid, CellState.Mustard, 0);
         }
 
@@ -53,7 +68,11 @@ namespace GameTheory
 
         public override string ToString()
         {
-            string res = "";
+            string res = "\n";
+
+            for (int i = 0; i < Grid.GetLength(1); i++)
+                res += "  " + (i + 1).ToString() + " ";
+            res += "\n";
             for (int i = Grid.GetLength(0) - 1; i >= 0; i--)
             {
                 res += "| ";
