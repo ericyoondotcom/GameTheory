@@ -80,7 +80,46 @@ namespace GameTheory
                             return -1;
                         }
 
-                        // TODO: Diagonal checks
+                        if (
+                            j < grid.GetLength(1) - 4 && i < grid.GetLength(0) - 4 &&
+                            grid[i, j] == ConnectFour.CellState.Mustard &&
+                            grid[i + 1, j + 1] == ConnectFour.CellState.Mustard &&
+                            grid[i + 2, j + 2] == ConnectFour.CellState.Mustard &&
+                            grid[i + 3, j + 3] == ConnectFour.CellState.Mustard
+                        )
+                        {
+                            return 1;
+                        }
+                        if (
+                            j < grid.GetLength(1) - 4 && i < grid.GetLength(0) - 4 &&
+                            grid[i, j] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 1, j + 1] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 2, j + 2] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 3, j + 3] == ConnectFour.CellState.Ketchup
+                        )
+                        {
+                            return -1;
+                        }
+                        if (
+                            j < grid.GetLength(1) - 4 && i > 3 &&
+                            grid[i, j] == ConnectFour.CellState.Mustard &&
+                            grid[i - 1, j + 1] == ConnectFour.CellState.Mustard &&
+                            grid[i - 2, j + 2] == ConnectFour.CellState.Mustard &&
+                            grid[i - 3, j + 3] == ConnectFour.CellState.Mustard
+                        )
+                        {
+                            return 1;
+                        }
+                        if (
+                            j < grid.GetLength(1) - 4 && i > 3 &&
+                            grid[i, j] == ConnectFour.CellState.Ketchup &&
+                            grid[i - 1, j + 1] == ConnectFour.CellState.Ketchup &&
+                            grid[i - 2, j + 2] == ConnectFour.CellState.Ketchup &&
+                            grid[i - 3, j + 3] == ConnectFour.CellState.Ketchup
+                        )
+                        {
+                            return -1;
+                        }
 
                     }
                 }
@@ -111,18 +150,18 @@ namespace GameTheory
 
         public override string ToString()
         {
-            return $"Wins: {wins}, Sims: {gamesSimulated}, FE: {FullyExpanded}";
-            //switch (player)
-            //{
-            //    case ConnectFour.CellState.Ketchup:
-            //        return "X";
-            //    case ConnectFour.CellState.Mustard:
-            //        return "O";
-            //    case ConnectFour.CellState.Empty:
-            //        return " ";
-            //    default:
-            //        return "THIS SHOULD NOT HAPPEN PANIC PANIC PANIC";
-            //}
+
+            switch (player)
+            {
+                case ConnectFour.CellState.Ketchup:
+                    return "X";
+                case ConnectFour.CellState.Mustard:
+                    return "O";
+                case ConnectFour.CellState.Empty:
+                    return " ";
+                default:
+                    return "THIS SHOULD NOT HAPPEN PANIC PANIC PANIC";
+            }
         }
     }
 }

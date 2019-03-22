@@ -9,16 +9,22 @@ namespace GameTheory
 
             while (true)
             {
-                ConnectFour game = new ConnectFour();
+                ConnectFour game;
                 Console.Clear();
                 Console.WriteLine("Do you want to go first? (Y/n)");
                 if (Console.ReadKey().Key == ConsoleKey.N)
                 {
+                    game = new ConnectFour(ConnectFour.CellState.Mustard);
                     game.ComputerMove();
+                }
+                else
+                {
+                    game = new ConnectFour(ConnectFour.CellState.Ketchup);
                 }
                 Console.Write(game);
                 while (true)
                 {
+
                     Console.WriteLine("\n\nYour turn! Press keys 1-7 to move, press M for the computer to move for you. Enter to start new game");
                     bool exit = false;
                     switch (Console.ReadKey().Key)
@@ -56,6 +62,7 @@ namespace GameTheory
                             game.HumanMove(randy.Next(7));
                             break;
                     }
+                    Console.Clear();
 
                     if (exit) break;
                     game.ComputerMove();

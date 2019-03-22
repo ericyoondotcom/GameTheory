@@ -36,7 +36,7 @@ namespace GameTheory
             }
         }
 
-        public ConnectFour()
+        public ConnectFour(CellState initialState)
         {
             var newGrid = new CellState[6, 7];
             for(int i = 0; i < newGrid.GetLength(0); i++)
@@ -46,7 +46,7 @@ namespace GameTheory
                     newGrid[i, j] = CellState.Empty;
                 }
             }
-            this.currentNode = new ConnectFourNode(newGrid, CellState.Mustard, 0);
+            this.currentNode = new ConnectFourNode(newGrid, initialState, 0);
         }
 
         public WinState WinCheck()
