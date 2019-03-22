@@ -38,7 +38,7 @@ namespace GameTheory
 
         public ConnectFour()
         {
-            var newGrid = new CellState[7, 6];
+            var newGrid = new CellState[6, 7];
             for(int i = 0; i < newGrid.GetLength(0); i++)
             {
                 for(int j = 0; j < newGrid.GetLength(1); j++)
@@ -49,9 +49,24 @@ namespace GameTheory
             this.currentNode = new ConnectFourNode(newGrid, CellState.Mustard, 0);
         }
 
+        public WinState WinCheck()
+        {
+            switch (currentNode.Value)
+            {
+                case 1:
+                    return WinState.Mustard;
+                case -1:
+                    return WinState.Ketchup;
+                case 0:
+                default:
+                    return WinState.Empty;
+            }
+        }
+
         public void HumanMove(int column)
         {
-            foreach(ConnectFourNode child in currentNode.Children)
+            if (WinCheck() != WinState.Empty) return;
+            foreach (ConnectFourNode child in currentNode.Children)
             {
                 if(child.column == column)
                 {
@@ -63,7 +78,8 @@ namespace GameTheory
         }
         public void ComputerMove()
         {
-            currentNode = (ConnectFourNode)GameLogic.MonteCarlo(currentNode, true, 100);
+            if (WinCheck() != WinState.Empty) return;
+            currentNode = (ConnectFourNode)GameLogic.MonteCarlo(currentNode, currentNode.player == CellState.Mustard);
         }
 
         public override string ToString()

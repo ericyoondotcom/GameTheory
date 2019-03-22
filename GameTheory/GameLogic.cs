@@ -40,7 +40,7 @@ namespace GameTheory
             return (bestValue, best);
         }
 
-        public static MonteCarloNode MonteCarlo(MonteCarloNode root, bool isMax, int simulations)
+        public static MonteCarloNode MonteCarlo(MonteCarloNode root, bool isMax, int simulations = 1000)
         {
             for(int i = 0; i < simulations; i++)
             {
@@ -81,10 +81,31 @@ namespace GameTheory
                 current.gamesSimulated++;
                 return current.Value;
             }
-            if (!current.FullyEpanded)
+            if (!current.FullyExpanded)
             {
                 MonteCarloNode child = MonteCarloSelect(current);
-                return Simulate(child);
+
+                float result = Simulate(child);
+                if ((isMax && current.Value == 1) || (!isMax && current.Value == -1))
+                {
+                    current.wins++;
+                }
+                else
+                {
+                    current.wins += .5f;
+                }
+
+                if ((!isMax && child.Value == 1) || (isMax && child.Value == -1))
+                {
+                    child.wins++;
+                }
+                else
+                {
+                    child.wins += .5f;
+                }
+                current.gamesSimulated++;
+                child.gamesSimulated++;
+                return result;
             }
 
 

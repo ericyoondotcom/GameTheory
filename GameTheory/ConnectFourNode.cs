@@ -5,7 +5,7 @@ namespace GameTheory
 {
     public class ConnectFourNode : MonteCarloNode
     {
-        public List<ConnectFourNode> children;
+        List<ConnectFourNode> children;
         public ConnectFour.CellState[,] grid;
         public ConnectFour.CellState player;
         public int column;
@@ -111,17 +111,18 @@ namespace GameTheory
 
         public override string ToString()
         {
-            switch (player)
-            {
-                case ConnectFour.CellState.Ketchup:
-                    return "X";
-                case ConnectFour.CellState.Mustard:
-                    return "O";
-                case ConnectFour.CellState.Empty:
-                    return " ";
-                default:
-                    return "THIS SHOULD NOT HAPPEN PANIC PANIC PANIC";
-            }
+            return $"Wins: {wins}, Sims: {gamesSimulated}, FE: {FullyExpanded}";
+            //switch (player)
+            //{
+            //    case ConnectFour.CellState.Ketchup:
+            //        return "X";
+            //    case ConnectFour.CellState.Mustard:
+            //        return "O";
+            //    case ConnectFour.CellState.Empty:
+            //        return " ";
+            //    default:
+            //        return "THIS SHOULD NOT HAPPEN PANIC PANIC PANIC";
+            //}
         }
     }
 }

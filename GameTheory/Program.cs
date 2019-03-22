@@ -19,6 +19,7 @@ namespace GameTheory
                 Console.Write(game);
                 while (true)
                 {
+                    Console.WriteLine("\n\nYour turn! Press keys 1-7 to move, press M for the computer to move for you. Enter to start new game");
                     bool exit = false;
                     switch (Console.ReadKey().Key)
                     {
@@ -43,14 +44,29 @@ namespace GameTheory
                         case ConsoleKey.D7:
                             game.HumanMove(6);
                             break;
+                        case ConsoleKey.M:
+                            game.ComputerMove();
+                            break;
                         case ConsoleKey.Enter:
                             exit = true;
+                            break;
+                        default:
+                            Console.WriteLine("Oopsies, that isn't an option. Moving random for you :)");
+                            Random randy = new Random();
+                            game.HumanMove(randy.Next(7));
                             break;
                     }
 
                     if (exit) break;
                     game.ComputerMove();
+
                     Console.Write(game);
+                    if(game.WinCheck() != ConnectFour.WinState.Empty)
+                    {
+                        Console.WriteLine(game.WinCheck());
+                        Console.ReadKey();
+                        break;
+                    }
                 }
             }
         }

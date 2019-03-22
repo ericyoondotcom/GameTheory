@@ -1,6 +1,8 @@
 ﻿using System;
+
 namespace GameTheory
 {
+
     public abstract class MonteCarloNode : GameNode
     {
         public float wins { get; set; }
@@ -18,13 +20,13 @@ namespace GameTheory
             }
         }
 
-        public bool FullyEpanded {
+        public bool FullyExpanded {
             get
             {
                 if (Children.Length == 0) return false;
                 for(int i = 0; i < Children.Length; i++)
                 {
-                    if (Children[i].Visited) return false;
+                    if (!Children[i].Visited) return false;
                 }
                 return true;
             }
