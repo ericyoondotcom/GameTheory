@@ -101,21 +101,21 @@ namespace GameTheory
                             return -1;
                         }
                         if (
-                            j < grid.GetLength(1) - 4 && i > 3 &&
-                            grid[i, j] == ConnectFour.CellState.Mustard &&
-                            grid[i - 1, j + 1] == ConnectFour.CellState.Mustard &&
-                            grid[i - 2, j + 2] == ConnectFour.CellState.Mustard &&
-                            grid[i - 3, j + 3] == ConnectFour.CellState.Mustard
+                            j < grid.GetLength(1) - 4 && i < grid.GetLength(0) - 4 &&
+                            grid[i, j + 3] == ConnectFour.CellState.Mustard &&
+                            grid[i + 1, j + 2] == ConnectFour.CellState.Mustard &&
+                            grid[i + 2, j + 1] == ConnectFour.CellState.Mustard &&
+                            grid[i + 3, j] == ConnectFour.CellState.Mustard
                         )
                         {
                             return 1;
                         }
                         if (
-                            j < grid.GetLength(1) - 4 && i > 3 &&
-                            grid[i, j] == ConnectFour.CellState.Ketchup &&
-                            grid[i - 1, j + 1] == ConnectFour.CellState.Ketchup &&
-                            grid[i - 2, j + 2] == ConnectFour.CellState.Ketchup &&
-                            grid[i - 3, j + 3] == ConnectFour.CellState.Ketchup
+                            j < grid.GetLength(1) - 4 && i < grid.GetLength(0) - 4 &&
+                            grid[i, j + 3] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 1, j + 2] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 2, j + 1] == ConnectFour.CellState.Ketchup &&
+                            grid[i + 3, j] == ConnectFour.CellState.Ketchup
                         )
                         {
                             return -1;
@@ -125,6 +125,18 @@ namespace GameTheory
                 }
                 return 0;
 
+            }
+        }
+
+        public bool IsTie
+        {
+            get
+            {
+                foreach(ConnectFour.CellState cell in grid)
+                {
+                    if (cell == ConnectFour.CellState.Empty) return false;
+                }
+                return true;
             }
         }
 
@@ -140,7 +152,9 @@ namespace GameTheory
                     {
                         ConnectFour.CellState newPlayer = (player == ConnectFour.CellState.Ketchup ? ConnectFour.CellState.Mustard : ConnectFour.CellState.Ketchup);
                         newGrid[j, i] = newPlayer;
-                        newChildren.Add(new ConnectFourNode(newGrid, newPlayer, i));
+                        ConnectFourNode newNode = new ConnectFourNode(newGrid, newPlayer, i);
+                        newNode.IsTerminal = newNode.Value != 0 || newNode.IsTie;
+                        newChildren.Add(newNode);
                         break;
                     }
                 }

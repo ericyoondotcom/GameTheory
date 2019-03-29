@@ -51,6 +51,7 @@ namespace GameTheory
 
         public WinState WinCheck()
         {
+            if (!currentNode.IsTerminal) return WinState.Empty;
             switch (currentNode.Value)
             {
                 case 1:
@@ -59,7 +60,7 @@ namespace GameTheory
                     return WinState.Ketchup;
                 case 0:
                 default:
-                    return WinState.Empty;
+                    return WinState.Tie;
             }
         }
 

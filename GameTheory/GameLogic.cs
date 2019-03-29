@@ -6,7 +6,9 @@ namespace GameTheory
 {
     public static class GameLogic
     {
-    
+
+        static Random randy = new Random();
+
         public static (int value, GameNode best) MinMax(GameNode current, bool isMax, int alpha = int.MinValue, int beta = int.MaxValue)
         {
             if (current.IsTerminal)
@@ -16,7 +18,7 @@ namespace GameTheory
 
             GameNode best = null;
             int bestValue = (isMax ? int.MinValue : int.MaxValue);
-            Random randy = new Random();
+
             foreach(GameNode c in current.Children)
             {
                 int val = MinMax(c, !isMax).value;
@@ -40,7 +42,7 @@ namespace GameTheory
             return (bestValue, best);
         }
 
-        public static MonteCarloNode MonteCarlo(MonteCarloNode root, bool isMax, int simulations = 1000)
+        public static MonteCarloNode MonteCarlo(MonteCarloNode root, bool isMax, int simulations = 5000)
         {
             for(int i = 0; i < simulations; i++)
             {
@@ -51,6 +53,7 @@ namespace GameTheory
             MonteCarloNode bestNode = null;
             foreach(MonteCarloNode n in root.Children)
             {
+                Console.WriteLine($"{((ConnectFourNode)n).column}: {n.gamesSimulated} games, {n.wins / n.gamesSimulated}% rate");
                 if(n.gamesSimulated > best)
                 {
                     best = n.gamesSimulated;
@@ -73,7 +76,7 @@ namespace GameTheory
                 {
                     current.wins++;
                 }
-                else
+                else if (current.Value == 0)
                 {
                     current.wins += .5f;
                 }
@@ -86,11 +89,12 @@ namespace GameTheory
                 MonteCarloNode child = MonteCarloSelect(current);
 
                 float result = Simulate(child);
+
                 if ((isMax && current.Value == 1) || (!isMax && current.Value == -1))
                 {
                     current.wins++;
                 }
-                else
+                else if (current.Value == 0)
                 {
                     current.wins += .5f;
                 }
@@ -99,7 +103,7 @@ namespace GameTheory
                 {
                     child.wins++;
                 }
-                else
+                else if (current.Value == 0)
                 {
                     child.wins += .5f;
                 }
@@ -120,13 +124,13 @@ namespace GameTheory
                 }
             }
 
-            float res = __MonteCarlo(best, !isMax);
+            int res = (int)__MonteCarlo(best, !isMax);
 
             if((isMax && res == 1) || (!isMax && res == -1))
             {
                 current.wins++;
             }
-            else
+            else if (res == 0)
             {
                 current.wins += .5f;
             }
@@ -139,7 +143,7 @@ namespace GameTheory
 
         static MonteCarloNode MonteCarloSelect(MonteCarloNode node)
         {
-            Random randy = new Random();
+
             List<MonteCarloNode> unvisitedChildren = node.Children.Where(n => !n.Visited).ToList();
             MonteCarloNode randomChild = unvisitedChildren[randy.Next(unvisitedChildren.Count)];
             randomChild.Visited = true;
@@ -148,13 +152,13 @@ namespace GameTheory
 
         static double UCT(MonteCarloNode child, double parentSims, double rate = 1.4142135624)
         {
-            return (child.wins / child.gamesSimulated) + (rate * Math.Sqrt(Math.Log(parentSims) / child.gamesSimulated));
+            return (child.wins / child.gamesSimulated) + (rate * Math.Sqrt(Math.Log(parentSims, Math.E) / child.gamesSimulated));
         }
 
         static float Simulate(MonteCarloNode initial)
         {
             if (initial.IsTerminal) return initial.Value;
-            Random randy = new Random();
+         
             MonteCarloNode simulated = initial.Children[randy.Next(initial.Children.Length)];
             while (!simulated.IsTerminal)
             {

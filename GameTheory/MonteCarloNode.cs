@@ -12,14 +12,6 @@ namespace GameTheory
 
         public bool Visited { get; set; } = false;
 
-        public float WinRate
-        {
-            get
-            {
-                return wins / gamesSimulated;
-            }
-        }
-
         public bool FullyExpanded {
             get
             {
@@ -32,12 +24,6 @@ namespace GameTheory
             }
         }
 
-        public bool IsTerminal
-        {
-            get
-            {
-                return Children == null || Children.Length == 0;
-            }
-        }
+        public bool IsTerminal = false;
     }
 }
