@@ -62,6 +62,7 @@ namespace GameTheory
                             game.HumanMove(randy.Next(7));
                             break;
                     }
+
                     Console.Clear();
 
                     if (exit) break;
