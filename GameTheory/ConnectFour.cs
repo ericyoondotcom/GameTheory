@@ -46,7 +46,7 @@ namespace GameTheory
                     newGrid[i, j] = CellState.Empty;
                 }
             }
-            this.currentNode = new ConnectFourNode(newGrid, initialState, 0);
+            this.currentNode = new ConnectFourNode(newGrid, initialState, 0, 0);
         }
 
         public WinState WinCheck()
@@ -67,6 +67,7 @@ namespace GameTheory
         public void HumanMove(int column)
         {
             if (WinCheck() != WinState.Empty) return;
+
             foreach (ConnectFourNode child in currentNode.Children)
             {
                 if(child.column == column)

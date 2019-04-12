@@ -25,8 +25,12 @@ namespace GameTheory
                 while (true)
                 {
 
-                    Console.WriteLine("\n\nYour turn! Press keys 1-7 to move, press M for the computer to move for you. Enter to start new game");
+                    Console.WriteLine("\n\n--------------\n| Your turn! |\n--------------\nPress keys 1-7 to move.\nPress M for the computer to move for you.");
+                    if (game.currentNode.moveNumber == 1)
+                        Console.WriteLine("Press S to steal the move the opponent just did!");
+                    Console.WriteLine("Press any other key for random move.\nPress enter for new game.");
                     bool exit = false;
+
                     switch (Console.ReadKey().Key)
                     {
                         case ConsoleKey.D1:
@@ -49,6 +53,13 @@ namespace GameTheory
                             break;
                         case ConsoleKey.D7:
                             game.HumanMove(6);
+                            break;
+                        case ConsoleKey.S:
+                            if(game.currentNode.moveNumber != 1) {
+                                Console.WriteLine("You're not allowed to do that right now");
+                                return;
+                            }
+                            game.HumanMove(-1);
                             break;
                         case ConsoleKey.M:
                             game.ComputerMove();

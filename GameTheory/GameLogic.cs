@@ -51,14 +51,41 @@ namespace GameTheory
 
             float best = -1;
             MonteCarloNode bestNode = null;
-            foreach(MonteCarloNode n in root.Children)
+
+            foreach (MonteCarloNode n in root.Children)
             {
-                Console.WriteLine($"{((ConnectFourNode)n).column}: {n.gamesSimulated} games, {n.wins / n.gamesSimulated}% rate");
                 if(n.gamesSimulated > best)
                 {
                     best = n.gamesSimulated;
                     bestNode = n;
                 }
+            }
+            for (int i = 10; i >= 1; i--)
+            {
+                bool first = true;
+                foreach(MonteCarloNode n in root.Children)
+                {
+                    if (first)
+                    {
+                        first = false;
+                        Console.Write("  ");
+                    }
+                    else
+                    {
+                        Console.Write("   ");
+                    }
+                    if (n == bestNode) Console.ForegroundColor = ConsoleColor.Magenta;
+                    if (n.gamesSimulated / bestNode.gamesSimulated > i / 10.0f)
+                    {
+                        Console.Write("█");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
             }
             return bestNode;
         }
